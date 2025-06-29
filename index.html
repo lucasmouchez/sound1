@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<title>Lecteur MP3 - Fréquences Animales</title>
+<style>
+  body { font-family: Arial, sans-serif; padding: 20px; background: #121212; color: #eee; }
+  h1 { margin-bottom: 15px; }
+  ul { list-style: none; padding: 0; max-height: 500px; overflow-y: auto; border: 1px solid #444; background: #222; }
+  li {
+    padding: 8px 12px;
+    cursor: pointer;
+    border-bottom: 1px solid #444;
+    user-select: none;
+  }
+  li:hover { background-color: #333; }
+  li.active { background-color: #1DB954; color: black; font-weight: bold; }
+  audio { width: 100%; margin-top: 20px; outline: none; border-radius: 6px; }
+</style>
+</head>
+<body>
+
+<h1>Lecteur MP3 - Fréquences Animales</h1>
+<ul id="playlist"></ul>
+<audio id="player" controls></audio>
+
+<script>
+const songs = [
+  "frequence_chat_20000hz.mp3",
+  "frequence_chat_28195hz.mp3",
+  "frequence_chat_39749hz.mp3",
+  "frequence_chat_56037hz.mp3",
+  "frequence_chat_79000hz.mp3",
+  "frequence_chauve_souris_120000hz.mp3",
+  "frequence_chauve_souris_20000hz.mp3",
+  "frequence_chauve_souris_31301hz.mp3",
+  "frequence_chauve_souris_48989hz.mp3",
+  "frequence_chauve_souris_76673hz.mp3",
+  "frequence_cheval_20000hz.mp3",
+  "frequence_cheval_22752hz.mp3",
+  "frequence_cheval_25884hz.mp3",
+  "frequence_cheval_29447hz.mp3",
+  "frequence_cheval_33500hz.mp3",
+  "frequence_chien_20000hz.mp3",
+  "frequence_chien_26321hz.mp3",
+  "frequence_chien_34641hz.mp3",
+  "frequence_chien_45590hz.mp3",
+  "frequence_chien_60000hz.mp3",
+  "frequence_dauphin_150000hz.mp3",
+  "frequence_dauphin_20000hz.mp3",
+  "frequence_dauphin_33097hz.mp3",
+  "frequence_dauphin_54772hz.mp3",
+  "frequence_dauphin_90641hz.mp3",
+  "frequence_gerbille_20000hz.mp3",
+  "frequence_gerbille_26321hz.mp3",
+  "frequence_gerbille_34641hz.mp3",
+  "frequence_gerbille_45590hz.mp3",
+  "frequence_gerbille_60000hz.mp3",
+  "frequence_porc_20000hz.mp3",
+  "frequence_porc_23858hz.mp3",
+  "frequence_porc_28460hz.mp3",
+  "frequence_porc_33950hz.mp3",
+  "frequence_porc_40499hz.mp3",
+  "frequence_rat_20000hz.mp3",
+  "frequence_rat_28284hz.mp3",
+  "frequence_rat_40000hz.mp3",
+  "frequence_rat_56568hz.mp3",
+  "frequence_rat_80000hz.mp3",
+  "frequence_renard_20000hz.mp3",
+  "frequence_renard_26853hz.mp3",
+  "frequence_renard_36055hz.mp3",
+  "frequence_renard_48410hz.mp3",
+  "frequence_renard_65000hz.mp3",
+  "frequence_souris_20000hz.mp3",
+  "frequence_souris_29210hz.mp3",
+  "frequence_souris_42661hz.mp3",
+  "frequence_souris_62307hz.mp3",
+  "frequence_souris_91000hz.mp3"
+];
+
+const playlistEl = document.getElementById("playlist");
+const player = document.getElementById("player");
+
+let currentIndex = 0;
+
+// Affiche la liste dans le DOM
+songs.forEach((song, index) => {
+  const li = document.createElement("li");
+  li.textContent = song;
+  li.addEventListener("click", () => {
+    playSong(index);
+  });
+  playlistEl.appendChild(li);
+});
+
+function playSong(index) {
+  currentIndex = index;
+  player.src = songs[index];
+  player.play();
+  highlightCurrent();
+}
+
+function highlightCurrent() {
+  Array.from(playlistEl.children).forEach((li, idx) => {
+    li.classList.toggle("active", idx === currentIndex);
+  });
+}
+
+// Joue la première chanson au chargement
+playSong(0);
+
+// Chanson suivante automatique
+player.addEventListener("ended", () => {
+  currentIndex++;
+  if(currentIndex >= songs.length) currentIndex = 0;
+  playSong(currentIndex);
+});
+</script>
+
+</body>
+</html>
